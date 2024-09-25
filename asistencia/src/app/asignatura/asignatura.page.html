@@ -14,8 +14,27 @@
     <p class="asignatura-section">{{ detalles.seccion }}</p>
     <p class="asignatura-students">Cantidad de Alumnos: {{ detalles.alumnos }}</p>
   </div>
-    <!-- Código QR -->
-    <div class="qr-code">
-      <img src="assets/images/qr_ingles_1.png" alt="Código QR">
-    </div>
+  
+  <!-- Código QR -->
+  <div class="qr-code">
+    <img src="assets/images/qr_ingles_1.png" alt="Código QR">
+  </div>
+
+  <!-- Listado de Alumnos en formato de tabla -->
+  <div class="alumnos-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alumno of alumnos">
+          <td>{{ alumno.nombre }}</td>
+          <td>Ausente</td> 
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </ion-content>
