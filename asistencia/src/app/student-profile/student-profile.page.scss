@@ -1,0 +1,30 @@
+.boton-salir {
+    display: inline-block; /* Asegura que el botón se comporta como un bloque */
+    margin-left: 0; /* Alinea el botón a la izquierda */
+    margin-right: auto; /* Opcional: empuja el botón hacia la izquierda si hay otros elementos */
+    
+  }
+
+
+.center {
+    text-align: center;
+}
+
+ion-icon {
+    margin-top: 50%;
+    display: block;
+    margin: 0 auto;
+    width: 15%;
+    height: 15%;
+  }
+
+ion-content{
+    --ion-background-color: #d8dade;
+    --ion-text-color: #000;
+    
+}
+
+ion-card {
+    --background: #d8dade; /* Color de fondo del card */
+    --color: #000; /* Color del texto del card */
+  }

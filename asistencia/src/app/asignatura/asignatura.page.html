@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ detalles?.nombre }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/professor-profile"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="asignatura-details">
+    <img [src]="detalles?.imagen" alt="{{ detalles?.nombre }}" class="asignatura-image" />
+    <h2 class="asignatura-title">{{ detalles?.nombre }}</h2>
+    <p class="asignatura-section">{{ detalles?.seccion }}</p>
+    <p class="asignatura-students">Cantidad de Alumnos: {{ detalles?.alumnos }}</p>
+  </div>
+</ion-content>
