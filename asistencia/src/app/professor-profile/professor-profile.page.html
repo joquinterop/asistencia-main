@@ -1,3 +1,8 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Perfil del Profesor</ion-title>
+  </ion-toolbar>
+</ion-header>
 <br>
 <ion-content>
   <div class="profesor-image">
@@ -8,27 +13,19 @@
     <h1>{{ receivedUser }}</h1>
   </ion-text>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Asignaturas</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-
-        <ion-item  lines="full" button="true" (click)="navegar(curso.nombre)" *ngFor="let curso of cursos">
-          <ion-thumbnail slot="start">
-            <img alt="Inglés" src={{curso.imagen}}/>
-          </ion-thumbnail>
-          <ion-label>
-            <h2>{{curso.nombre}}</h2>
-            <p> {{curso.seccion}}</p>
-          </ion-label>
-          <ion-button></ion-button>
-        </ion-item>
-
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <ion-list>
+    <ion-item *ngFor="let curso of cursos" (click)="navegar(curso)">
+      <ion-avatar slot="start">
+        <img [src]="curso.imagen" alt="{{ curso.nombre }}">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ curso.nombre }}</h2>
+        <p>{{ curso.seccion }}</p>
+        <p>Alumnos: {{ curso.alumnos }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
 </ion-content>
 
 <ion-footer>

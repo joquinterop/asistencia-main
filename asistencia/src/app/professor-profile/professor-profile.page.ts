@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-professor-profile',
@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 export class ProfessorProfilePage implements OnInit {
   receivedUser: string | undefined;
   receivedPass: string | undefined;
-
   cursos = [
     { nombre: 'Inglés', seccion: 'Sección 1', alumnos: 15, imagen: 'assets/images/reino-unido.png' },
     { nombre: 'Español', seccion: 'Sección 2', alumnos: 16, imagen: 'assets/images/espana.png' },
@@ -20,22 +19,23 @@ export class ProfessorProfilePage implements OnInit {
 
   constructor(private router: Router) {}
 
-  // Método requerido por la interfaz OnInit
   ngOnInit() {
-    // Aquí puedes obtener los datos pasados a través del state (usuario y contraseña)
     if (history.state) {
       this.receivedUser = history.state.user;
       this.receivedPass = history.state.pass;
     }
   }
 
-  // Método para navegar de vuelta
   volver() {
-    this.router.navigate(['/login']); // Navega a la página de login
+    this.router.navigate(['/login']);
   }
 
-  // Método para navegar a diferentes asignaturas
-  navegar(asignatura: string) {
-    this.router.navigate(['/asignatura', asignatura]); // Navega a la página de asignatura
+  navegar(curso: any) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        detalles: curso
+      }
+    };
+    this.router.navigate(['/asignatura'], navigationExtras);
   }
 }

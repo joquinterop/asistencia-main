@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-asignatura',
@@ -7,26 +7,19 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./asignatura.page.scss'],
 })
 export class AsignaturaPage implements OnInit {
-  asignatura: string | null = null;
   detalles: any;
 
-  constructor(private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.asignatura = params.get('asignatura');
-      this.cargarDetallesAsignatura(this.asignatura);
-    });
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation && navigation.extras && navigation.extras.state) {
+      this.detalles = navigation.extras.state['detalles'];
+    }
   }
 
-  cargarDetallesAsignatura(asignatura: string | null) {
-    if (asignatura) {
-      this.detalles = {
-        'Inglés': { nombre: 'Inglés', seccion: 'Sección 1', alumnos: 15, imagen: 'assets/images/reino-unido.png' },
-        'Español': { nombre: 'Español', seccion: 'Sección 2', alumnos: 16, imagen: 'assets/images/espana.png' },
-        'Portugués': { nombre: 'Portugués', seccion: 'Sección 3', alumnos: 15, imagen: 'assets/images/portugal.png' },
-        'Francés': { nombre: 'Francés', seccion: 'Sección 4', alumnos: 20, imagen: 'assets/images/francia.png' }
-      }[asignatura];
+  ngOnInit() {
+    if (!this.detalles) {
+      console.error('No se recibieron detalles de la asignatura');
+      // Aquí podrías agregar una redirección a la página anterior o mostrar un mensaje de error
     }
   }
 }

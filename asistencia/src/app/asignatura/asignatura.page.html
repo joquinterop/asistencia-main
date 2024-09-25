@@ -8,10 +8,10 @@
 </ion-header>
 
 <ion-content>
-  <div class="asignatura-details">
-    <img [src]="detalles?.imagen" alt="{{ detalles?.nombre }}" class="asignatura-image" />
-    <h2 class="asignatura-title">{{ detalles?.nombre }}</h2>
-    <p class="asignatura-section">{{ detalles?.seccion }}</p>
-    <p class="asignatura-students">Cantidad de Alumnos: {{ detalles?.alumnos }}</p>
+  <div class="asignatura-details" *ngIf="detalles">
+    <img [src]="detalles.imagen" alt="{{ detalles.nombre }}" class="asignatura-image" />
+    <h2 class="asignatura-title">{{ detalles.nombre }}</h2>
+    <p class="asignatura-section">{{ detalles.seccion }}</p>
+    <p class="asignatura-students">Cantidad de Alumnos: {{ detalles.alumnos }}</p>
   </div>
 </ion-content>
