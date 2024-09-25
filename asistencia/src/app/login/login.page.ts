@@ -31,4 +31,9 @@ export class LoginPage {
       alert('Por favor, ingresa el usuario y la contraseña correctamente.');
     }
   }
+
+  // Método para redirigir a la página de reinicio de contraseña
+  goToResetPassword() {
+    this.router.navigate(['/reiniciar-contrasena']); // Asegúrate de que la ruta sea correcta
+  }
 }
