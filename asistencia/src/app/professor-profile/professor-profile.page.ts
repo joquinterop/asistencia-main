@@ -14,7 +14,6 @@ export class ProfessorProfilePage implements OnInit {
     { nombre: 'Español', seccion: 'Sección 2', alumnos: 16, imagen: 'assets/images/espana.png' },
     { nombre: 'Portugués', seccion: 'Sección 3', alumnos: 15, imagen: 'assets/images/portugal.png' },
     { nombre: 'Francés', seccion: 'Sección 4', alumnos: 20, imagen: 'assets/images/francia.png' },
-    { nombre: 'APP', seccion: 'Sección 10', alumnos: 30, imagen: 'assets/images/francia.png' }
   ];
 
   constructor(private router: Router) {}
