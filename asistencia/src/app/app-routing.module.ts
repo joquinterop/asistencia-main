@@ -35,6 +35,10 @@ const routes: Routes = [
   {
     path: 'asignatura/:asignatura',
     loadChildren: () => import('./asignatura/asignatura.module').then(m => m.AsignaturaPageModule)
+  },
+  {
+    path: 'reiniciar-contrasena',
+    loadChildren: () => import('./reiniciar-contrasena/reiniciar-contrasena.module').then( m => m.ReiniciarContrasenaPageModule)
   }
 ];
 
