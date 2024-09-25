@@ -1,27 +1,40 @@
-<ion-content [fullscreen]="true">
-    <ion-button size="small" class="boton-salir" (click)="volver()">
-      <ion-icon slot="start" name="star"></ion-icon>
-      Volver
-    </ion-button>
+<br>
+<ion-content>
+  <div class="student-image">
+    <img src="assets/images/mujer.png" alt="Foto del Estudiante">
+  </div>
 
-    <ion-icon name="person-circle-outline"></ion-icon>
+  <ion-text class="center">
+    <!--  <h1>{{ receivedStudent }}</h1> -->
+  </ion-text>
 
-    <ion-text class="center">
-      <h1>Nombre alumno</h1>
+  <!-- Sección de escaneo QR -->
+  <div class="qr-scan">
+    <ion-text>
+      <h2>Escanea el código QR</h2>
     </ion-text>
-
-    <ion-img
-    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwKhCxEmS969psqhVKUpQMmozoWS5REy8w2g&s"
-    alt="qr"
-    ></ion-img>
-
-    <ion-card color="primary">
-      <ion-card-header>
-        <ion-card-title></ion-card-title>
-        <ion-card-subtitle>Escanea el codigo QR para quedar presente</ion-card-subtitle>
-      </ion-card-header>
-    
-      <ion-card-content></ion-card-content>
-    </ion-card>
-    
+    <div class="qr-camera">
+      <!-- Aquí iría el componente o funcionalidad para abrir la cámara -->
+      <ion-icon name="camera-outline"></ion-icon>
+    </div>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment value="default">
+      <ion-segment-button value="inicio">
+        <ion-icon name="home-outline"></ion-icon>
+        <ion-label>Inicio</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="mensajes">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+        <ion-label>Mensajes</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="perfil">
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>
