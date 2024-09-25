@@ -23,17 +23,40 @@ export class LoginPage {
       const user = this.usuario.value.user;
       const pass = this.usuario.value.pass;
 
-      // Navegamos a la página del perfil del profesor con los datos del usuario y contraseña
-      this.router.navigate(['/professor-profile'], {
-        state: { user, pass },
-      });
+      // Lógica para determinar el tipo de usuario (profesor o estudiante)
+      const userType = this.getUserType(user, pass); 
+
+      if (userType === 'profesor') {
+        // Navegamos a la página del perfil del profesor
+        this.router.navigate(['/professor-profile'], {
+          state: { user, pass },
+        });
+      } else if (userType === 'estudiante') {
+        // Navegamos a la página del perfil del estudiante
+        this.router.navigate(['/student-profile'], {
+          state: { user, pass },
+        });
+      } else {
+        alert('Usuario no encontrado o credenciales incorrectas.');
+      }
     } else {
       alert('Por favor, ingresa el usuario y la contraseña correctamente.');
     }
   }
 
+  // Función simulada para obtener el tipo de usuario
+  getUserType(user: string, pass: string): string {
+    if (user.includes('prof')) {
+      return 'profesor';
+    } else if (user.includes('stud')) {
+      return 'estudiante';
+    } else {
+      return '';  // Usuario no encontrado
+    }
+  }
+
   // Método para redirigir a la página de reinicio de contraseña
   goToResetPassword() {
-    this.router.navigate(['/reiniciar-contrasena']); // Asegúrate de que la ruta sea correcta
+    this.router.navigate(['/reiniciar-contrasena']);
   }
 }
