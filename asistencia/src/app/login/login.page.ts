@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  usuario: FormGroup;  // Declaramos el formulario
+  usuario: FormGroup;  
 
   constructor(private fb: FormBuilder, private router: Router) {
     // Inicializamos el formulario con campos vacíos y validaciones
