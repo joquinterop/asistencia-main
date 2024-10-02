@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthserviceService } from '../service/authservice.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginPage {
   usuario: FormGroup;  
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private alertController: AlertController, private authService: AuthserviceService) {
     // Inicializamos el formulario con campos vacíos y validaciones
     this.usuario = this.fb.group({
       user: ['', [Validators.required]],
@@ -27,11 +29,15 @@ export class LoginPage {
       const userType = this.getUserType(user, pass); 
 
       if (userType === 'profesor') {
+        //Cambiar el estado del authservice...
+        this.authService.login();
         // Navegamos a la página del perfil del profesor
         this.router.navigate(['/professor-profile'], {
           state: { user, pass },
         });
       } else if (userType === 'estudiante') {
+        //Cambiar el estado del authservice...
+        this.authService.login();
         // Navegamos a la página del perfil del estudiante
         this.router.navigate(['/student-profile'], {
           state: { user, pass },
