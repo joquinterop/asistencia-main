@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthserviceService } from '../service/authservice.service';
 import { AlertController } from '@ionic/angular';
+import { ConsumoapiService } from '../service/consumoapi.service';
+
 
 @Component({
   selector: 'app-login',

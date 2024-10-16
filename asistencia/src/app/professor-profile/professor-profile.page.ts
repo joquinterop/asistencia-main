@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { ConsumoapiService } from '../service/consumoapi.service';
 
 @Component({
   selector: 'app-professor-profile',
@@ -9,6 +10,12 @@ import { Router, NavigationExtras } from '@angular/router';
 export class ProfessorProfilePage implements OnInit {
   receivedUser: string | undefined;
   receivedPass: string | undefined;
+
+  now = new Date();
+  testVariable:String = "";
+
+  fecha= this.now.toDateString();
+  
   cursos = [
     { nombre: 'Inglés', seccion: 'Sección 1', alumnos: 15, imagen: 'assets/images/reino-unido.png' },
     { nombre: 'Español', seccion: 'Sección 2', alumnos: 16, imagen: 'assets/images/espana.png' },
@@ -16,13 +23,14 @@ export class ProfessorProfilePage implements OnInit {
     { nombre: 'Francés', seccion: 'Sección 4', alumnos: 20, imagen: 'assets/images/francia.png' },
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private consumoAPI:ConsumoapiService, private activateroute:ActivatedRoute ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (history.state) {
       this.receivedUser = history.state.user;
       this.receivedPass = history.state.pass;
     }
+    this.getPostService();  
   }
 
   volver() {
@@ -37,4 +45,11 @@ export class ProfessorProfilePage implements OnInit {
     };
     this.router.navigate(['/asignatura'], navigationExtras);
   }
+  //Crear metodo para consumir el service
+  getPostService(){
+    this.consumoAPI.getPosts().subscribe((respuesta)=> {
+      console.log (respuesta)
+    })
+  }
 }
+
