@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthserviceService } from '../service/authservice.service';
@@ -10,7 +10,7 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   usuario: FormGroup;  
 
   constructor(
@@ -25,6 +25,15 @@ export class LoginPage {
       user: ['', [Validators.required]],
       pass: ['', [Validators.required]],
     });
+  }
+
+  // Se añade ngOnInit para limpiar el formulario al cargar la página
+  ngOnInit() {
+    this.limpiarFormulario();
+  }
+
+  ionViewWillEnter() {
+    this.limpiarFormulario(); // Aseguramos limpiar cada vez que entramos a la página
   }
 
   async login() {
@@ -72,6 +81,12 @@ export class LoginPage {
     }
   }
   
+  // Nueva función para limpiar el formulario y el almacenamiento local
+  limpiarFormulario() {
+    this.usuario.reset();  // Limpiar los campos del formulario
+    localStorage.clear();  // Limpiar almacenamiento local para asegurarnos
+    sessionStorage.clear();  // Limpiar almacenamiento de sesión si es necesario
+  }
 
   goToResetPassword() {
     this.router.navigate(['/reiniciar-contrasena']);

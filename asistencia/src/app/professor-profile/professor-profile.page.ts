@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConsumoapiService } from '../service/consumoapi.service';
+import { AlertController } from '@ionic/angular';  // Importamos AlertController
 
 @Component({
   selector: 'app-professor-profile',
@@ -10,35 +11,34 @@ import { ConsumoapiService } from '../service/consumoapi.service';
 export class ProfessorProfilePage implements OnInit {
   nombre: string | undefined;
   receivedId: number | undefined;
-  fotoPerfil: string | undefined;  // Campo para la foto de perfil
+  fotoPerfil: string | undefined;
   fecha: string | undefined;
-  correo: string | undefined;  // Agregado para mostrar el correo del profesor
+  correo: string | undefined;
   cursos: any[] = [];
 
   constructor(
     private router: Router, 
-    private consumoAPI: ConsumoapiService
+    private consumoAPI: ConsumoapiService,
+    private alertController: AlertController  // Añadimos AlertController aquí
   ) {}
 
   ngOnInit(): void {
-    // Verificamos si los datos vienen de la navegación (login)
     if (history.state) {
       this.nombre = history.state.nombre;
       this.receivedId = history.state.id;
       this.fotoPerfil = history.state.fotoPerfil;
-      this.correo = history.state.correo;  // Agregado para obtener el correo
+      this.correo = history.state.correo;
     }
 
-    // Obtener los cursos del profesor
     this.getCursos();
-    this.fecha = this.formatearFecha(new Date());  // Formatear la fecha actual
+    this.fecha = this.formatearFecha(new Date());
   }
 
   getCursos() {
     if (this.receivedId) {
       this.consumoAPI.obtenerCursosProfesor(this.receivedId).subscribe(
         (response: any) => {
-          this.cursos = response;  // Guardamos los cursos recibidos
+          this.cursos = response;
         },
         (error: any) => {
           console.error('Error al obtener los cursos del profesor', error);
@@ -54,5 +54,32 @@ export class ProfessorProfilePage implements OnInit {
 
   navegar(curso: any) {
     this.router.navigate(['/asignatura'], { state: { detalles: curso } });
+  }
+
+  // Función para mostrar el alert de confirmación
+  async cerrarSesion() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar cierre de sesión',
+      message: '¿Estás seguro de que deseas cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cierre de sesión cancelado');
+          }
+        },
+        {
+          text: 'Cerrar sesión',
+          handler: () => {
+            // Acción cuando se confirma el cierre de sesión
+            localStorage.clear();  // Limpiar los datos de sesión
+            this.router.navigate(['/login']);  // Redirigir a la página de login
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

@@ -43,6 +43,7 @@
 
 </ion-content>
 
+<!-- Footer con el botón de cerrar sesión como parte del segmento -->
 <ion-footer>
   <ion-toolbar>
     <ion-segment value="default">
@@ -57,6 +58,11 @@
       <ion-segment-button value="perfil">
         <ion-icon name="person-outline"></ion-icon>
         <ion-label>Perfil</ion-label>
+      </ion-segment-button>
+      <!-- Botón de cerrar sesión -->
+      <ion-segment-button value="cerrar-sesion" (click)="cerrarSesion()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        <ion-label>Cerrar Sesión</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
