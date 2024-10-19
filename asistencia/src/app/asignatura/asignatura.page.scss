@@ -1,52 +1,50 @@
-/* Estilos para la página de asignatura */
-
 ion-header {
-  --background: #f8f8f8; 
-  --color: #333; 
+  --background: #f8f8f8;
+  --color: #333;
 }
 
 ion-toolbar {
-  --background: #ffffff; 
+  --background: #ffffff;
 }
 
-.asignatura-details {
-  padding: 16px; 
-  text-align: center; 
+.detalles-asignatura-card {
+  padding: 16px;
+  text-align: center;
 }
 
-.asignatura-image {
+.imagen-asignatura-card {
   border-radius: 10px;
-  width: 100px; 
+  width: 100px;
   height: auto;
+  margin-bottom: 15px;
 }
 
-.asignatura-title {
-  font-weight: bold; 
-  font-size: 1.5em; 
-  margin: 16px 0; 
+.titulo-asignatura-card {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin: 16px 0;
 }
 
-.asignatura-section, .asignatura-students {
-  font-weight: bold; 
-  font-size: 1.2em; 
-  margin: 8px 0; 
+.seccion-asignatura-card, .alumnos-asignatura-card {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin: 8px 0;
 }
 
-.qr-code {
+.qr-asignatura-card {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-top: 20px;
 
   img {
-    width: 200px; 
+    width: 200px;
     height: auto;
   }
 }
 
-/* Estilos para la tabla de alumnos */
-.alumnos-table {
-  margin: 20px auto; 
-  max-width: 90%; 
+.tabla-alumnos-asignatura {
+  margin: 20px auto;
+  max-width: 90%;
 
   table {
     width: 100%;
@@ -54,13 +52,20 @@ ion-toolbar {
 
     th, td {
       text-align: center;
-      padding: 10px; 
-      border: 1px solid #ccc; 
+      padding: 10px;
+      border: 1px solid #ccc;
     }
 
     th {
-      background-color: #f0f0f0; 
-      font-weight: bold; 
+      background-color: #f0f0f0;
+      font-weight: bold;
     }
   }
+}
+
+/* Aquí centramos el título de la lista de alumnos */
+ion-card-title {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
 }

@@ -6,12 +6,16 @@ import { IonicModule } from '@ionic/angular';
 import { AsignaturaPageRoutingModule } from './asignatura-routing.module';
 import { AsignaturaPage } from './asignatura.page';
 
+// Importamos el módulo QRCode
+import { QRCodeModule } from 'angularx-qrcode';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AsignaturaPageRoutingModule
+    AsignaturaPageRoutingModule,
+    QRCodeModule  // Añadir el QRCodeModule aquí
   ],
   declarations: [AsignaturaPage]
 })
