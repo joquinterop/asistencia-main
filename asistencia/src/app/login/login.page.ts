@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthserviceService } from '../service/authservice.service';
-import { AlertController } from '@ionic/angular';
 import { ConsumoapiService } from '../service/consumoapi.service';
-
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +13,13 @@ import { ConsumoapiService } from '../service/consumoapi.service';
 export class LoginPage {
   usuario: FormGroup;  
 
-  constructor(private fb: FormBuilder, private router: Router, private alertController: AlertController, private authService: AuthserviceService) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private alertController: AlertController, 
+    private authService: AuthserviceService,
+    private apiService: ConsumoapiService  // Servicio para la API
+  ) {
     // Inicializamos el formulario con campos vacíos y validaciones
     this.usuario = this.fb.group({
       user: ['', [Validators.required]],
@@ -22,48 +27,52 @@ export class LoginPage {
     });
   }
 
-  login() {
+  async login() {
     if (this.usuario.valid) {
       const user = this.usuario.value.user;
       const pass = this.usuario.value.pass;
-
-      // Lógica para determinar el tipo de usuario (profesor o estudiante)
-      const userType = this.getUserType(user, pass); 
-
-      if (userType === 'profesor') {
-        //Cambiar el estado del authservice...
-        this.authService.login();
-        // Navegamos a la página del perfil del profesor
-        this.router.navigate(['/professor-profile'], {
-          state: { user, pass },
-        });
-      } else if (userType === 'estudiante') {
-        //Cambiar el estado del authservice...
-        this.authService.login();
-        // Navegamos a la página del perfil del estudiante
-        this.router.navigate(['/student-profile'], {
-          state: { user, pass },
-        });
-      } else {
-        alert('Usuario no encontrado o credenciales incorrectas.');
-      }
-    } else {
-      alert('Por favor, ingresa el usuario y la contraseña correctamente.');
+  
+      // Llamada a la API para el login
+      this.apiService.login(user, pass).subscribe(
+        (response: any) => {
+          console.log('Respuesta de la API:', response);
+          if (response.tipoPerfil === 1) {
+            // Perfil Profesor
+            this.authService.login();
+            this.router.navigate(['/professor-profile'], {
+              state: { 
+                nombre: response.nombre, 
+                id: response.id,
+                correo: response.correo,
+                fotoPerfil: response.fotoPerfil  // Incluimos la foto de perfil
+              }
+            });
+          } else if (response.tipoPerfil === 2) {
+            // Perfil Estudiante
+            this.authService.login();
+            this.router.navigate(['/student-profile'], {
+              state: { 
+                nombre: response.nombre, 
+                id: response.id,
+                correo: response.correo,
+                fotoPerfil: response.fotoPerfil  // Incluimos la foto de perfil
+              }
+            });
+          }
+        },
+        async (error: any) => {
+          const alert = await this.alertController.create({
+            header: 'Error',
+            message: 'Credenciales incorrectas, por favor inténtalo de nuevo.',
+            buttons: ['OK']
+          });
+          await alert.present();
+        }
+      );
     }
   }
+  
 
-  // Función simulada para obtener el tipo de usuario
-  getUserType(user: string, pass: string): string {
-    if (user.includes('prof')) {
-      return 'profesor';
-    } else if (user.includes('stud')) {
-      return 'estudiante';
-    } else {
-      return '';  // Usuario no encontrado
-    }
-  }
-
-  // Método para redirigir a la página de reinicio de contraseña
   goToResetPassword() {
     this.router.navigate(['/reiniciar-contrasena']);
   }

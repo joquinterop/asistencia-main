@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ConsumoapiService } from '../service/consumoapi.service';
 
 @Component({
@@ -8,48 +8,51 @@ import { ConsumoapiService } from '../service/consumoapi.service';
   styleUrls: ['./professor-profile.page.scss'],
 })
 export class ProfessorProfilePage implements OnInit {
-  receivedUser: string | undefined;
-  receivedPass: string | undefined;
+  nombre: string | undefined;
+  receivedId: number | undefined;
+  fotoPerfil: string | undefined;  // Campo para la foto de perfil
+  fecha: string | undefined;
+  correo: string | undefined;  // Agregado para mostrar el correo del profesor
+  cursos: any[] = [];
 
-  now = new Date();
-  testVariable:String = "";
-
-  fecha= this.now.toDateString();
-  
-  cursos = [
-    { nombre: 'Inglés', seccion: 'Sección 1', alumnos: 15, imagen: 'assets/images/reino-unido.png' },
-    { nombre: 'Español', seccion: 'Sección 2', alumnos: 16, imagen: 'assets/images/espana.png' },
-    { nombre: 'Portugués', seccion: 'Sección 3', alumnos: 15, imagen: 'assets/images/portugal.png' },
-    { nombre: 'Francés', seccion: 'Sección 4', alumnos: 20, imagen: 'assets/images/francia.png' },
-  ];
-
-  constructor(private router: Router, private consumoAPI:ConsumoapiService, private activateroute:ActivatedRoute ) {}
+  constructor(
+    private router: Router, 
+    private consumoAPI: ConsumoapiService
+  ) {}
 
   ngOnInit(): void {
+    // Verificamos si los datos vienen de la navegación (login)
     if (history.state) {
-      this.receivedUser = history.state.user;
-      this.receivedPass = history.state.pass;
+      this.nombre = history.state.nombre;
+      this.receivedId = history.state.id;
+      this.fotoPerfil = history.state.fotoPerfil;
+      this.correo = history.state.correo;  // Agregado para obtener el correo
     }
-    this.getPostService();  
+
+    // Obtener los cursos del profesor
+    this.getCursos();
+    this.fecha = this.formatearFecha(new Date());  // Formatear la fecha actual
   }
 
-  volver() {
-    this.router.navigate(['/login']);
+  getCursos() {
+    if (this.receivedId) {
+      this.consumoAPI.obtenerCursosProfesor(this.receivedId).subscribe(
+        (response: any) => {
+          this.cursos = response;  // Guardamos los cursos recibidos
+        },
+        (error: any) => {
+          console.error('Error al obtener los cursos del profesor', error);
+        }
+      );
+    }
+  }
+
+  formatearFecha(fecha: Date): string {
+    const opciones = { day: '2-digit', month: 'short', year: 'numeric' } as const;
+    return fecha.toLocaleDateString('es-ES', opciones).replace(/\./g, '');
   }
 
   navegar(curso: any) {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        detalles: curso
-      }
-    };
-    this.router.navigate(['/asignatura'], navigationExtras);
-  }
-  //Crear metodo para consumir el service
-  getPostService(){
-    this.consumoAPI.getPosts().subscribe((respuesta)=> {
-      console.log (respuesta)
-    })
+    this.router.navigate(['/asignatura'], { state: { detalles: curso } });
   }
 }
-
