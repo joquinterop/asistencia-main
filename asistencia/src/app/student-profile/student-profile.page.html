@@ -8,7 +8,7 @@
 <ion-content>
   <!-- Imagen del Estudiante -->
   <div class="student-image">
-    <img [src]="fotoPerfil || 'assets/images/mujer.png'" alt="Foto del Estudiante">
+    <img [src]="fotoPerfil" alt="Foto del Estudiante">
   </div>
 
   <!-- Mostramos los datos del estudiante -->
@@ -41,6 +41,10 @@
       <ion-segment-button value="perfil">
         <ion-icon name="person-outline"></ion-icon>
         <ion-label>Perfil</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="cerrar-sesion" (click)="cerrarSesion()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        <ion-label>Cerrar Sesión</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

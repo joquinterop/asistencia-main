@@ -7,7 +7,7 @@
 
 <ion-content>
 
-  <!-- Tarjeta nueva para el perfil del profesor -->
+  <!-- Tarjeta para el perfil del profesor -->
   <ion-card class="tarjeta-perfil-profesor">
     <ion-card-content>
       <div class="profesor-image">
@@ -15,19 +15,16 @@
       </div>
 
       <ion-text class="center">
-        <!-- Mostramos el nombre del profesor -->
         <h1>{{ nombre }}</h1>
         <!-- Mostramos el correo del profesor -->
         <h3 *ngIf="correo">Correo: {{ correo }}</h3>
-        <!-- Mostramos la fecha formateada -->
-        <h2>Fecha: {{ fecha }}</h2>
-        <!-- Mostramos el número de cursos impartidos -->
+        <h3>Fecha: {{ fecha }}</h3>
         <h4>Cursos impartidos: {{ cursos.length }}</h4>
       </ion-text>
     </ion-card-content>
   </ion-card>
 
-  <!-- Aquí mostramos los cursos del profesor -->
+  <!-- cursos del profesor -->
   <ion-list>
     <ion-item *ngFor="let curso of cursos" (click)="navegar(curso)">
       <ion-avatar slot="start">
@@ -43,7 +40,7 @@
 
 </ion-content>
 
-<!-- Footer con el botón de cerrar sesión como parte del segmento -->
+<!-- Footer -->
 <ion-footer>
   <ion-toolbar>
     <ion-segment value="default">
@@ -59,7 +56,6 @@
         <ion-icon name="person-outline"></ion-icon>
         <ion-label>Perfil</ion-label>
       </ion-segment-button>
-      <!-- Botón de cerrar sesión -->
       <ion-segment-button value="cerrar-sesion" (click)="cerrarSesion()">
         <ion-icon name="log-out-outline"></ion-icon>
         <ion-label>Cerrar Sesión</ion-label>

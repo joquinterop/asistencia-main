@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConsumoapiService } from '../service/consumoapi.service'; // Importamos el servicio de la API
+import { ConsumoapiService } from '../service/consumoapi.service'; 
+import { AlertController } from '@ionic/angular';  
 
 @Component({
   selector: 'app-student-profile',
@@ -15,7 +16,8 @@ export class StudentProfilePage implements OnInit {
 
   constructor(
     private router: Router,
-    private consumoAPI: ConsumoapiService // Añadimos la API
+    private consumoAPI: ConsumoapiService, 
+    private alertController: AlertController  
   ) {}
 
   ngOnInit(): void {
@@ -27,10 +29,10 @@ export class StudentProfilePage implements OnInit {
       this.correo = history.state.correo;
     }
 
-    this.obtenerCursos(); // Podrías mostrar los cursos o cualquier otra data relevante
+    this.obtenerCursos(); 
   }
 
-  // Función para obtener información adicional, como los cursos del estudiante
+
   obtenerCursos() {
     if (this.receivedId) {
       this.consumoAPI.obtenerCursosEstudiante(this.receivedId).subscribe(
@@ -44,7 +46,29 @@ export class StudentProfilePage implements OnInit {
     }
   }
 
-  volver() {
-    this.router.navigate(['/login']);
+  // Función para mostrar el alert de confirmación
+  async cerrarSesion() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar cierre de sesión',
+      message: '¿Estás seguro de que deseas cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cierre de sesión cancelado');
+          }
+        },
+        {
+          text: 'Cerrar sesión',
+          handler: () => {
+            localStorage.clear(); 
+            this.router.navigate(['/login']);  
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

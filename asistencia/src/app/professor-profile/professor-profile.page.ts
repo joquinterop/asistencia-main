@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConsumoapiService } from '../service/consumoapi.service';
-import { AlertController } from '@ionic/angular';  // Importamos AlertController
+import { AlertController } from '@ionic/angular';  
 
 @Component({
   selector: 'app-professor-profile',
@@ -19,7 +19,7 @@ export class ProfessorProfilePage implements OnInit {
   constructor(
     private router: Router, 
     private consumoAPI: ConsumoapiService,
-    private alertController: AlertController  // Añadimos AlertController aquí
+    private alertController: AlertController  
   ) {}
 
   ngOnInit(): void {
@@ -73,8 +73,8 @@ export class ProfessorProfilePage implements OnInit {
           text: 'Cerrar sesión',
           handler: () => {
             // Acción cuando se confirma el cierre de sesión
-            localStorage.clear();  // Limpiar los datos de sesión
-            this.router.navigate(['/login']);  // Redirigir a la página de login
+            localStorage.clear(); 
+            this.router.navigate(['/login']);  
           }
         }
       ]
