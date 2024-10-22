@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
       // Llamada a la API para el login
       this.apiService.login(user, pass).subscribe(
         (response: any) => {
-          console.log('Respuesta de la API:', response);
+          console.log('Respuesta de la API:', response);  // Asegúrate de que la respuesta llegue bien
           if (response.tipoPerfil === 1) {
             // Perfil Profesor
             this.authService.login();
@@ -53,23 +53,27 @@ export class LoginPage implements OnInit {
                 nombre: response.nombre, 
                 id: response.id,
                 correo: response.correo,
-                fotoPerfil: response.fotoPerfil  // Incluimos la foto de perfil
+                fotoPerfil: response.fotoPerfil
               }
             });
           } else if (response.tipoPerfil === 2) {
             // Perfil Estudiante
+            console.log('Navegando al perfil de estudiante');
             this.authService.login();
             this.router.navigate(['/student-profile'], {
               state: { 
                 nombre: response.nombre, 
                 id: response.id,
                 correo: response.correo,
-                fotoPerfil: response.fotoPerfil  // Incluimos la foto de perfil
+                fotoPerfil: response.fotoPerfil
               }
             });
+          } else {
+            console.log('Perfil no válido');
           }
         },
         async (error: any) => {
+          console.error('Error en el login:', error);
           const alert = await this.alertController.create({
             header: 'Error',
             message: 'Credenciales incorrectas, por favor inténtalo de nuevo.',
@@ -78,6 +82,8 @@ export class LoginPage implements OnInit {
           await alert.present();
         }
       );
+      
+      
     }
   }
   
