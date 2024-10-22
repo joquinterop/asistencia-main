@@ -3,13 +3,19 @@
     <ion-title>Perfil del Estudiante</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <br>
 <ion-content>
+  <!-- Imagen del Estudiante -->
   <div class="student-image">
-    <img src="assets/images/mujer.png" alt="Foto del Estudiante">
+    <img [src]="fotoPerfil || 'assets/images/mujer.png'" alt="Foto del Estudiante">
   </div>
 
-
+  <!-- Mostramos los datos del estudiante -->
+  <ion-text class="center">
+    <h1>{{ nombre }}</h1>
+    <h3 *ngIf="correo">Correo: {{ correo }}</h3>
+  </ion-text>
 
   <div class="qr-scan">
     <ion-text>

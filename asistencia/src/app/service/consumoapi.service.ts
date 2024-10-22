@@ -28,5 +28,12 @@ export class ConsumoapiService {
     );
   }
 
-  // Otros métodos que puedas tener...
+  // Implementamos la función para obtener los cursos del estudiante
+  obtenerCursosEstudiante(idEstudiante: number): Observable<any> {
+    const url = `${this.apiURL}/estudiantes/${idEstudiante}/cursos`; // Ajusta el endpoint según tu API
+    return this.httpClient.get<any>(url);
+  }
 }
+
+  // Otros métodos que puedas tener...
+
