@@ -28,22 +28,6 @@ export class StudentProfilePage implements OnInit {
       this.fotoPerfil = history.state.fotoPerfil;
       this.correo = history.state.correo;
     }
-
-    this.obtenerCursos(); 
-  }
-
-
-  obtenerCursos() {
-    if (this.receivedId) {
-      this.consumoAPI.obtenerCursosEstudiante(this.receivedId).subscribe(
-        (response: any) => {
-          console.log('Cursos del estudiante:', response);
-        },
-        (error: any) => {
-          console.error('Error al obtener los cursos del estudiante', error);
-        }
-      );
-    }
   }
 
   // Función para mostrar el alert de confirmación
