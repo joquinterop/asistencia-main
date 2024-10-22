@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
     private router: Router, 
     private alertController: AlertController, 
     private authService: AuthserviceService,
-    private apiService: ConsumoapiService  // Servicio para la API
+    private apiService: ConsumoapiService  
   ) {
     // Inicializamos el formulario con campos vacíos y validaciones
     this.usuario = this.fb.group({
@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.limpiarFormulario(); // Aseguramos limpiar cada vez que entramos a la página
+    this.limpiarFormulario(); //Para limpiar cada vez que entramos a la pagina
   }
 
   async login() {
@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
       // Llamada a la API para el login
       this.apiService.login(user, pass).subscribe(
         (response: any) => {
-          console.log('Respuesta de la API:', response);  // Asegúrate de que la respuesta llegue bien
+          console.log('Respuesta de la API:', response);
           if (response.tipoPerfil === 1) {
             // Perfil Profesor
             this.authService.login();
@@ -89,9 +89,9 @@ export class LoginPage implements OnInit {
   
   // Nueva función para limpiar el formulario y el almacenamiento local
   limpiarFormulario() {
-    this.usuario.reset();  // Limpiar los campos del formulario
-    localStorage.clear();  // Limpiar almacenamiento local para asegurarnos
-    sessionStorage.clear();  // Limpiar almacenamiento de sesión si es necesario
+    this.usuario.reset(); 
+    localStorage.clear(); 
+    sessionStorage.clear(); 
   }
 
   goToResetPassword() {
