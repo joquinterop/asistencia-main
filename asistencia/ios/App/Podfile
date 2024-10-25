@@ -1,0 +1,26 @@
+platform :ios, '13.0'
+use_frameworks!
+
+workspace 'App.xcworkspace'  # Asegúrate de que este nombre coincida con tu archivo de espacio de trabajo
+
+# Definición de pods
+def capacitor_pods
+  pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
+  pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
+  pod 'CapacitorCamera', :path => '../../node_modules/@capacitor/camera'
+  pod 'CapacitorHaptics', :path => '../../node_modules/@capacitor/haptics'
+  pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
+  pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
+end
+
+target 'App' do  # Asegúrate de que este nombre coincida con el de tu aplicación
+  capacitor_pods
+end
+
+post_install do |installer|
+  assertDeploymentTarget(installer)
+end
+
+require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
+

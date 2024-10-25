@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthserviceService } from '../service/authservice.service';
 import { ConsumoapiService } from '../service/consumoapi.service';
 import { AlertController } from '@ionic/angular';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';  // Asegúrate de importar CameraSource
+
 
 @Component({
   selector: 'app-login',
@@ -33,7 +35,7 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.limpiarFormulario(); //Para limpiar cada vez que entramos a la pagina
+    this.limpiarFormulario(); //Para limpiar cada vez que entramos a la página
   }
 
   async login() {
@@ -43,7 +45,7 @@ export class LoginPage implements OnInit {
   
       // Llamada a la API para el login
       this.apiService.login(user, pass).subscribe(
-        (response: any) => {
+        async (response: any) => {
           console.log('Respuesta de la API:', response);
           if (response.tipoPerfil === 1) {
             // Perfil Profesor
@@ -60,14 +62,37 @@ export class LoginPage implements OnInit {
             // Perfil Estudiante
             console.log('Navegando al perfil de estudiante');
             this.authService.login();
-            this.router.navigate(['/student-profile'], {
-              state: { 
-                nombre: response.nombre, 
-                id: response.id,
-                correo: response.correo,
-                fotoPerfil: response.fotoPerfil
-              }
-            });
+  
+            try {
+              // Abrimos la cámara directamente
+              const image = await Camera.getPhoto({
+                quality: 90,
+                allowEditing: false,
+                resultType: CameraResultType.Uri,
+                source: CameraSource.Camera // Forzar el uso de la cámara nativa
+              });
+  
+              console.log('Imagen capturada:', image);
+  
+              this.router.navigate(['/student-profile'], {
+                state: { 
+                  nombre: response.nombre, 
+                  id: response.id,
+                  correo: response.correo,
+                  fotoPerfil: response.fotoPerfil,
+                  fotoCapturada: image.webPath // Pasamos la imagen capturada
+                }
+              });
+            } catch (error) {
+              console.error('Error al capturar la imagen:', error);
+              const alert = await this.alertController.create({
+                header: 'Error',
+                message: 'No se pudo acceder a la cámara. Inténtalo de nuevo.',
+                buttons: ['OK']
+              });
+              await alert.present();
+            }
+  
           } else {
             console.log('Perfil no válido');
           }
@@ -82,8 +107,6 @@ export class LoginPage implements OnInit {
           await alert.present();
         }
       );
-      
-      
     }
   }
   
